@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusTimero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=Courier+Prime&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-radial"></div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="brand">
+                <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <h1>FocusTimer</h1>
+            </div>
+            <button id="settings-toggle-btn" class="icon-btn" aria-label="Open Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </button>
+        </header>
+
+        <main class="main-content">
+            <section class="timer-section glass-panel">
+                <div class="mode-switcher">
+                    <button id="mode-focus" class="mode-btn active" data-mode="focus">Focus</button>
+                    <button id="mode-short" class="mode-btn" data-mode="short">Short Break</button>
+                    <button id="mode-long" class="mode-btn" data-mode="long">Long Break</button>
+                </div>
+
+                <div class="timer-display-container">
+                    <svg class="progress-ring" viewBox="0 0 200 200">
+                        <circle class="progress-ring-bg" cx="100" cy="100" r="90" />
+                        <circle id="progress-ring-fill" class="progress-ring-fill" cx="100" cy="100" r="90" stroke-dasharray="565.48" stroke-dashoffset="0" />
+                    </svg>
+                    <div class="timer-time" id="timer-time-display">25:00</div>
+                </div>
+
+                <div id="active-task-banner" class="active-task-banner hidden">
+                    <span class="label">CURRENT TASK</span>
+                    <h2 id="active-task-name" class="task-title">Doing awesome things</h2>
+                    <span id="active-task-poms" class="task-poms">🍅 0 / 2</span>
+                </div>
+
+                <div class="timer-controls">
+                    <button id="reset-btn" class="control-btn secondary" title="Reset Timer" aria-label="Reset Timer">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                        </svg>
+                    </button>
+                    <button id="play-pause-btn" class="control-btn primary" title="Start Timer" aria-label="Start Timer">
+                        <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <svg id="pause-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg>
+                    </button>
+                    <button id="skip-btn" class="control-btn secondary" title="Skip Session" aria-label="Skip Session">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                            <line x1="19" y1="5" x2="19" y2="19"></line>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <section class="tasks-section glass-panel">
+                <div class="section-header">
+                    <h2>Tasks</h2>
+                    <span id="task-summary-count" class="summary-badge">0 remaining</span>
+                </div>
+
+                <form id="add-task-form" class="add-task-form">
+                    <div class="input-group">
+                        <input type="text" id="task-title-input" placeholder="What are you working on?" required autocomplete="off">
+                        <div class="pom-estimate-wrapper">
+                            <label for="task-est-poms" class="visually-hidden">Est. Pomodoros</label>
+                            <span class="tomato-prefix">🍅</span>
+                            <input type="number" id="task-est-poms" min="1" max="10" value="1" title="Estimated Pomodoros">
+                        </div>
+                        <button type="submit" class="add-btn" aria-label="Add Task">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="tasks-container">
+                    <ul id="tasks-list" class="tasks-list">
+                        <li class="tasks-empty-state">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <p>No tasks yet. Create one to get started!</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal-card glass-panel">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="settings-close-btn" class="icon-btn" aria-label="Close Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="settings-form">
+                    <div class="form-section">
+                        <h3>Time (Minutes)</h3>
+                        <div class="time-inputs">
+                            <div class="form-group">
+                                <label for="setting-focus">Focus</label>
+                                <input type="number" id="setting-focus" min="1" max="180" value="25">
+                            </div>
+                            <div class="form-group">
+                                <label for="setting-short">Short Break</label>
+                                <input type="number" id="setting-short" min="1" max="60" value="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="setting-long">Long Break</label>
+                                <input type="number" id="setting-long" min="1" max="120" value="15">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Behavior</h3>
+                        <div class="toggle-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="setting-auto-breaks">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="toggle-label">
+                                <span class="title">Auto Start Breaks</span>
+                                <span class="desc">Automatically start the break timer after focus</span>
+                            </div>
+                        </div>
+                        <div class="toggle-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="setting-auto-focus">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="toggle-label">
+                                <span class="title">Auto Start Pomodoros</span>
+                                <span class="desc">Automatically start a new focus session after a break</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Sound & Alerts</h3>
+                        <div class="form-group select-group">
+                            <label id="sound-dropdown-label">Alarm Sound</label>
+                            <div class="custom-select-container" id="custom-sound-select">
+                                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-labelledby="sound-dropdown-label" id="sound-select-trigger">
+                                    <span id="sound-select-value">Celestial Chime</span>
+                                    <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                                <ul class="custom-select-options hidden" role="listbox" aria-labelledby="sound-dropdown-label" id="sound-select-options">
+                                    <li class="custom-option" data-value="digital" role="option" aria-selected="false">Digital Alarm</li>
+                                    <li class="custom-option" data-value="chime" role="option" aria-selected="true">Celestial Chime</li>
+                                    <li class="custom-option" data-value="bell" role="option" aria-selected="false">Soft Temple Bell</li>
+                                    <li class="custom-option" data-value="none" role="option" aria-selected="false">No Sound</li>
+                                </ul>
+                            </div>
+                            <input type="hidden" id="setting-alarm-sound" value="chime">
+                        </div>
+                        <div class="form-group slider-group">
+                            <div class="slider-header">
+                                <label for="setting-volume">Alarm Volume</label>
+                                <span id="volume-val">60%</span>
+                            </div>
+                            <input type="range" id="setting-volume" min="0" max="100" value="60">
+                        </div>
+                        <div class="test-sound-wrapper">
+                            <button type="button" id="test-sound-btn" class="text-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                                Test Sound
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="settings-save-btn" class="action-btn primary-action">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
